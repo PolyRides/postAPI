@@ -1,0 +1,16 @@
+{
+  "name": "postapi",
+  "version": "1.0.0",
+  "description": "API that returns the facebook posts",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "mongodb": "^2.2.16"
+  }
+}
