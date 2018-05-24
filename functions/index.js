@@ -41,17 +41,21 @@ admin.initializeApp(functions.config().firebase);
 var db = admin.database();
 var ref = db.ref("/data");
 
+// Data is sorted
 exports.restAPI = functions.https.onRequest((request, response) => {
-  ref.once("value", function(data) {
+  ref.once("value", (data) => {
     let returnObj = [];
     let dataObj = data.val();
     console.log("dataObj: ", dataObj)
-
-    for (var key in dataObj) {
-      console.log("key --> ", key)
-      if (dataObj.hasOwnProperty(key)) {
-        returnObj.push(dataObj[key]);
-          console.log(key + " -> " + dataObj[key]);
+    let newObj = dataObj.sort((first, second) => {
+      let firstUTC = Date.parse(first["created_time"]);
+      let secondUTC = Date.parse(second["created_time"]);
+      return secondUTC - firstUTC;
+    })
+    console.log("newObj: ", newObj)
+    for (var key in newObj) {
+      if (newObj.hasOwnProperty(key)) {
+        returnObj.push(newObj[key]);
       }
   }
     response.send({data: returnObj});
